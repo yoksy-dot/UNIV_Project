@@ -702,6 +702,7 @@ public class MeshMaker : MonoBehaviour
         kari_pos.Add(kari_pos[0]);//最後
 
         heikin = vec_lngth / 120;//一辺の長さ
+
         Debug.Log(heikin);
         //pos_conversion = pos_list;
         func2(kari_pos,point_num);
@@ -710,34 +711,61 @@ public class MeshMaker : MonoBehaviour
         if(point_num.Count < 1)
         {
             Debug.Log("鋭角が見当たりませんでした");
-            return;
+            //return;
         }
-        int side_point = Mathf.FloorToInt((120 - point_num.Count) / point_num.Count);//一辺に含まれる頂点数
-        int farst = Mathf.FloorToInt(side_point / 2);//最初と最後のための頂点数
+        //int side_point = Mathf.FloorToInt((120 - point_num.Count) / point_num.Count);//一辺に含まれる頂点数
+        //int farst = Mathf.FloorToInt(side_point / 2);//最初と最後のための頂点数
         float imamade = 0;//前の頂点から進んだ値
 
-        for (int j = 0; j < point_num.Count; j++)
+        //for (int j = 0; j < point_num.Count; j++)
+        //{
+        //    for (int i = 1; i < side_point+1; i++)
+        //    {
+        //        Debug.Log("ddd");
+        //        //if (j == 1)
+        //        //{
+        //        //    i += farst;
+        //        //}
+
+        //        float v1 = (kari_pos[i-1] - kari_pos[i]).magnitude;
+
+        //        if (heikin < imamade + v1)
+        //        {
+        //            imamade += v1;
+        //        }
+        //        else
+        //        {
+        //            pos_conversion.Add((kari_pos[i - 1] - kari_pos[i]).normalized * (v1 - heikin));
+
+        //        }
+        //    }
+        //}
+        float gg = 0;
+        Vector3 aaaa;
+        int numm = 0;
+        while(true)
         {
-            for (int i = 1; i < side_point+1; i++)
+            Debug.Log(":" + SideLength.Count);
+            gg += SideLength[numm].magnitude;
+
+            if(gg <= heikin)
             {
-                Debug.Log("ddd");
-                //if (j == 1)
-                //{
-                //    i += farst;
-                //}
-
-                float v1 = (kari_pos[i-1] - kari_pos[i]).magnitude;
-
-                if (heikin < imamade + v1)
-                {
-                    imamade += v1;
-                }
+                if(numm+1 <= SideLength.Count)
+                    aaaa = pos_conversion[pos_conversion.Count - 1] - SideLength[numm+1];
                 else
+                    aaaa = pos_conversion[pos_conversion.Count - 1] - SideLength[0];
+
+                pos_conversion.Add(aaaa);
+                numm++;
+                gg = 0;
+                if(numm >= SideLength.Count)
                 {
-                    pos_conversion.Add((kari_pos[i - 1] - kari_pos[i]).normalized * (v1 - heikin));
-                    
+                    break;
                 }
             }
+            //Debug.Log(":" + SideLength.Count);
+            //if (numm >= 0)
+            //    break;
         }
 
 
